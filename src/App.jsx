@@ -1,6 +1,6 @@
 import Header from './components/Header.jsx';
 import UserInput from './components/UserInput.jsx';
-import Result from './components/Result.jsx';
+import Results from './components/Results.jsx';
 import {useState} from 'react';
 
 function App() {
@@ -11,16 +11,16 @@ function App() {
     annualInvestment: 1200,
     expectedReturn: 6,
     duration: 10,
-  })
+  });
 
   const inputIsValid = userInput.duration >= 1;
 
   // Note: input 필드에서 값을 변경할 때마다 발생되어야 할 함수 (상태를 업데이트하기 위함)
   function handleChange(inputIdentifier, newValue) {
-    setUserInput(prevUserInput => {
-      return{
+    setUserInput((prevUserInput) => {
+      return {
         ...prevUserInput,
-        [inputIdentifier]: + newValue
+        [inputIdentifier]: + newValue,
       };
     });
   }
@@ -29,8 +29,7 @@ function App() {
     <>
       <Header />
       <UserInput userInput={userInput} onChange={handleChange} />
-      {!inputIsValid && <p className='center'>Please enter duration greater than zero</p>}
-      {inputIsValid && <Result input={userInput} />}
+      <Results input={userInput} />
     </>
   )
 }

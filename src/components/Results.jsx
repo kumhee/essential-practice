@@ -1,14 +1,18 @@
-import React from 'react';
 import { calculateInvestmentResults, formatter } from '../util/investment.js';
 
-export default function Result({ input }) {
-  const resultData = calculateInvestmentResults(input);
+export default function Results({ input }) {
+  const results = [];
+  calculateInvestmentResults(input, results);
+
+  if (results.length === 0) {
+    return <p className='center'>Invalid input data provided</p>
+  }
 
   // NOTE: 초기 투자 금액을 계산
   const initialInvestment =
-    resultData[0].valueEndOfYear -
-    resultData[0].interest -
-    resultData[0].annualInvestment;
+    results[0].valueEndOfYear -
+    results[0].interest -
+    results[0].annualInvestment;
 
   return (
     <table id='result'>
@@ -23,14 +27,14 @@ export default function Result({ input }) {
       </thead>
 
       <tbody>
-        {resultData.map((yearData) => {
+        {results.map((yearData) => {
           // NOTE: 총 이자
           const totalInterest =
             yearData.valueEndOfYear -
             yearData.annualInvestment * yearData.year -
             initialInvestment;
 
-          // Note: 총 투자자본
+          // NOTE: 총 투자자본
           const totalAmountInvested = yearData.valueEndOfYear - totalInterest;
 
           return (
